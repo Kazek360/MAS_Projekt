@@ -39,4 +39,9 @@ public abstract class SpaceShip {
     @EqualsAndHashCode.Exclude
     private Set<SpaceShip_Operation> spaceShip_Operations = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "spaceShip")
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Sailor> sailors = new LinkedHashSet<>();
 }
