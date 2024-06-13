@@ -49,4 +49,9 @@ public class ArtillerySite {
     private Set<ArtillerySite_SupplyStation> artillerySite_SupplyStations = new LinkedHashSet<>();
 
 
+    @OneToMany(mappedBy = "artillerySite", orphanRemoval = true, cascade = CascadeType.REMOVE)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<FireOrder> fireOrders = new LinkedHashSet<>();
+
 }
