@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -31,5 +34,18 @@ public class Unit {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Operation operation;
+
+
+    @OneToMany(mappedBy = "unit")
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Infantryman> infantrymen = new LinkedHashSet<>();
+
+    @OneToOne(mappedBy = "command", optional = false)
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Infantryman commander;
 
 }

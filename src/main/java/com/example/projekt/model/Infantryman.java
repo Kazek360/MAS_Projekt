@@ -1,10 +1,7 @@
 package com.example.projekt.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.HashSet;
@@ -21,4 +18,16 @@ public class Infantryman extends Soldier {
     @CollectionTable(name = "Equipment", joinColumns = @JoinColumn(name = "infantryman_id"))
     @Builder.Default
     private Set<String> equipment = new HashSet<>();
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "unit_id", nullable = false)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Unit unit;
+
+    @OneToOne
+    @JoinColumn(name = "command_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Unit command;
 }
