@@ -1,12 +1,12 @@
 package com.example.projekt.model;
 
+import com.example.projekt.model.AssociationsClasses.SpaceShip_Operation;
 import com.example.projekt.model.Enums.OperationType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -15,6 +15,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public class Operation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,17 +33,17 @@ public class Operation {
     @Size(min = 2, max = 255)
     private String planet;
 
-    @ManyToMany
-    @JoinTable(name = "Operation_spaceShips",
-            joinColumns = @JoinColumn(name = "operation_id"),
-            inverseJoinColumns = @JoinColumn(name = "spaceShips_id"))
-    private Set<SpaceShip> spaceShips = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "operation",fetch = FetchType.LAZY)
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Service> services = new LinkedHashSet<>();
 
-    public Set<SpaceShip> getSpaceShips() {
-        return spaceShips;
-    }
+    @OneToMany(mappedBy = "operation", fetch = FetchType.LAZY)
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<SpaceShip_Operation> spaceShip_Operations = new LinkedHashSet<>();
 
-    public void setSpaceShips(Set<SpaceShip> spaceShips) {
-        this.spaceShips = spaceShips;
-    }
+
 }

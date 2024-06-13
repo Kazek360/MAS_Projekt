@@ -1,5 +1,6 @@
 package com.example.projekt.model;
 
+import com.example.projekt.model.AssociationsClasses.SpaceShip_Operation;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -32,10 +33,10 @@ public abstract class SpaceShip {
     private Double fuel;
 
 
-    @ManyToMany(mappedBy = "spaceShips", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "spaceShip",fetch = FetchType.LAZY)
     @Builder.Default
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Operation> operations = new LinkedHashSet<>();
+    private Set<SpaceShip_Operation> spaceShip_Operations = new LinkedHashSet<>();
 
 }
