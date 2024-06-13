@@ -1,5 +1,6 @@
 package com.example.projekt.model;
 
+import com.example.projekt.model.Validation.ValidServiceDate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.*;
@@ -17,6 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ValidServiceDate
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
