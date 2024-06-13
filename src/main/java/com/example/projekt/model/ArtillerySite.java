@@ -1,5 +1,6 @@
 package com.example.projekt.model;
 
+import com.example.projekt.model.AssociationsClasses.ArtillerySite_SupplyStation;
 import com.example.projekt.model.Enums.ArtillerySiteState;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
@@ -40,5 +41,12 @@ public class ArtillerySite {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Service> services = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "artillerySite", fetch = FetchType.LAZY)
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<ArtillerySite_SupplyStation> artillerySite_SupplyStations = new LinkedHashSet<>();
+
 
 }
