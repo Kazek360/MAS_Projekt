@@ -1,6 +1,6 @@
 package com.example.projekt;
 
-import com.example.projekt.model.Employee;
+import com.example.projekt.model._Employee;
 import com.example.projekt.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationListener;
@@ -24,11 +24,11 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         boolean employeeExists = empRepo.count() > 0;
         if(!employeeExists) {
 
-            Employee e1 = Employee.builder()
+            _Employee e1 = _Employee.builder()
                     .firstName("Jan")
                     .lastName("Kowalski")
                     .build();
-            Employee e2 = Employee.builder()
+            _Employee e2 = _Employee.builder()
                     .firstName("Adam")
                     .lastName("Nowak")
                     .build();

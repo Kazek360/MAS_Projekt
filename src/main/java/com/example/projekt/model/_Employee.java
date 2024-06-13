@@ -11,7 +11,7 @@ import lombok.*;
 @Data
 @Builder
 @ToString
-public class Employee {
+public class _Employee {
     @Id
     @GeneratedValue()
     private Long id;

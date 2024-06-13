@@ -1,6 +1,6 @@
 package com.example.projekt.fxcontrollers;
 
-import com.example.projekt.model.Employee;
+import com.example.projekt.model._Employee;
 import com.example.projekt.repository.EmployeeRepository;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -17,7 +17,7 @@ public class HelloController implements Initializable {
 
     private final EmployeeRepository empRepo;
 
-    private List<Employee> emps;
+    private List<_Employee> emps;
 
 
     public Label lbl_e1;
@@ -25,7 +25,7 @@ public class HelloController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        emps = (List<Employee>) empRepo.findAll();
+        emps = (List<_Employee>) empRepo.findAll();
         if(emps.size() >= 2) {
             lbl_e1.setText(emps.get(0).toString());
             lbl_e2.setText(emps.get(1).toString());
