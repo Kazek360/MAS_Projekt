@@ -25,9 +25,10 @@ public class Infantryman extends Soldier {
     @EqualsAndHashCode.Exclude
     private Unit unit;
 
-    @OneToOne
-    @JoinColumn(name = "command_id")
+
+    @OneToOne(mappedBy = "commander")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Unit command;
+    private Unit commandingUnit;
+
 }

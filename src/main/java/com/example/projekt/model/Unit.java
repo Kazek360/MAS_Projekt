@@ -37,13 +37,13 @@ public class Unit {
 
 
     @OneToMany(mappedBy = "unit")
-    @Builder.Default
+//    @Builder.Default
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Infantryman> infantrymen = new LinkedHashSet<>();
 
-    @OneToOne(mappedBy = "command", optional = false)
-    @Builder.Default
+    @OneToOne(optional = false)
+    @JoinColumn(name = "commander_id", nullable = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Infantryman commander;
