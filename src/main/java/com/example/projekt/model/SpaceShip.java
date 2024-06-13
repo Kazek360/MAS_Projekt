@@ -4,10 +4,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -29,4 +30,12 @@ public abstract class SpaceShip {
 
     @Min(1)
     private Double fuel;
+
+
+    @ManyToMany(mappedBy = "spaceShips", fetch = FetchType.LAZY)
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Operation> operations = new LinkedHashSet<>();
+
 }
