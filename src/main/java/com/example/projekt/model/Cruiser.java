@@ -1,8 +1,9 @@
 package com.example.projekt.model;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -12,8 +13,9 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class Transporter extends SpaceShip{
+public class Cruiser extends SpaceShip{
 
     @Min(1)
-    private int magazinSpace;
+    private Integer numberOfSpecialWapons;
+
 }

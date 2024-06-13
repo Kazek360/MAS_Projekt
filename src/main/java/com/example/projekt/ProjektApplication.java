@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ProjektApplication {
 
     public static void main(String[] args) {
-//        SpringApplication.run(ProjektApplication.class, args);
-        Application.launch(FXApplication.class, args);
+        SpringApplication.run(ProjektApplication.class, args);
+//        Application.launch(FXApplication.class, args);
 
     }
 
