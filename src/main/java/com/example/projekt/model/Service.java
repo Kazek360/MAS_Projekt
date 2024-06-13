@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -27,12 +29,12 @@ public class Service {
     @FutureOrPresent(message = "The date cannot be earlier than the current date")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "date_from")
-    private Date dateFrom;
+    private LocalDate dateFrom;
 
     @FutureOrPresent(message = "The date cannot be earlier than the current date")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "date_to")
-    private Date dateTo;
+    private LocalDate dateTo;
 
     @ManyToOne
     @JoinColumn(name = "artillery_site_id")
