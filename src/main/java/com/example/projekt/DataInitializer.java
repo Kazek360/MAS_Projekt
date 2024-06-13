@@ -1,7 +1,7 @@
 package com.example.projekt;
 
 import com.example.projekt.model._Employee;
-import com.example.projekt.repository.EmployeeRepository;
+import com.example.projekt.repository._EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
 
-    private final EmployeeRepository empRepo;
+    private final _EmployeeRepository empRepo;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {

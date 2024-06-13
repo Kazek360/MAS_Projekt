@@ -22,7 +22,7 @@ public abstract class SpaceShip {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Ship is mandatory")
+    @NotBlank(message = "Ship name is mandatory")
     @Size(min = 2, max = 255)
     private String name;
 

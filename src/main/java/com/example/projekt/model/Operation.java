@@ -46,4 +46,10 @@ public class Operation {
     private Set<SpaceShip_Operation> spaceShip_Operations = new LinkedHashSet<>();
 
 
+    @OneToMany(mappedBy = "operation")
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Unit> units = new LinkedHashSet<>();
+
 }
