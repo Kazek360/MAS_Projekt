@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<TabPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="617.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="30.0" tabMinWidth="100.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18">
+<TabPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="529.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="30.0" tabMinWidth="100.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
     <Tab closable="false" text="Rozkaz ogniowy">
       <content>
@@ -25,13 +27,13 @@
                </children></AnchorPane>
       </content>
     </Tab>
-    <Tab closable="false" text="Zamów amunicję">
+    <Tab id="ammo_tab" closable="false" text="Zamów amunicję">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="260.0" prefWidth="383.0">
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="391.0" prefWidth="508.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <ComboBox id="position_Artillery_ComboBox" prefHeight="20.0" prefWidth="200.0" promptText="&lt;Wybierz stanowisko&gt;">
+                        <ComboBox id="artillery_ComboBox" prefHeight="20.0" prefWidth="200.0" promptText="&lt;Wybierz stanowisko&gt;">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
@@ -40,9 +42,9 @@
                            </VBox.margin>
                         </ComboBox>
                         <Text id="error_massage_artillery_search" fill="RED" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Nie jesteś przypisany do żadnego stanowiska artyleryjskiego!!!" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="200.0" />
-                        <SplitPane dividerPositions="0.5" prefHeight="1000.0" prefWidth="583.0">
+                        <SplitPane id="split_pane" dividerPositions="0.5" prefHeight="1000.0" prefWidth="583.0">
                            <items>
-                              <GridPane prefHeight="241.0" prefWidth="205.0">
+                              <GridPane id="leftGridPane" prefHeight="241.0" prefWidth="205.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -90,7 +92,7 @@
                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Amunicja:" textAlignment="CENTER" />
                                           <Text id="ammo_artillery_field" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
                                              <HBox.margin>
-                                                <Insets />
+                                                <Insets left="2.0" />
                                              </HBox.margin>
                                           </Text>
                                        </children>
@@ -130,13 +132,13 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                    <VBox id="search_Supply_VBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                          <ComboBox id="position_Supply_ComboBox" prefWidth="150.0" promptText="&lt;Wybierz stacje&gt;" />
+                                          <ComboBox id="supply_ComboBox" prefWidth="150.0" promptText="&lt;Wybierz stacje&gt;" />
                                           <Text id="error_massage_supply_search" fill="RED" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Stanowisko nie jest połączone z stacją zaopatrzenia!!!" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="200.0" />
                                        </children>
                                     </VBox>
-                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                    <HBox id="supply_ammo_hbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                                        <children>
                                           <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -154,6 +156,22 @@
                                           <Text id="ammo_supply_field" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                                        </children>
                                     </HBox>
+                                    <VBox id="order_value_vbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+                                       <children>
+                                          <HBox alignment="CENTER" prefHeight="32.0" prefWidth="304.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Zamówienie:" wrappingWidth="66.744140625" />
+                                                <TextField id="ammo_order_field" prefHeight="25.0" prefWidth="50.0">
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                          <Text id="error_massage_ammo_order" fill="RED" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Błędna wartość!!!" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="200.0" />
+                                          <Button id="order_button" mnemonicParsing="false" text="Zamów" />
+                                       </children>
+                                    </VBox>
                                  </children>
                               </GridPane>
                            </items>
