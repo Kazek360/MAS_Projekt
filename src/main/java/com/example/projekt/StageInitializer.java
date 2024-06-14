@@ -23,16 +23,19 @@ public class StageInitializer implements ApplicationListener<FXApplication.Stage
     @Value("classpath:/fxml/Hello.fxml")
     private Resource helloFxml;
 
+    @Value("classpath:/fxml/Ammunition_Chose_Artillery.fxml")
+    private Resource ammoFxml;
     private final ApplicationContext springContext;
 
     @Override
     public void onApplicationEvent(FXApplication.StageReadyEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(helloFxml.getURL());
+//            FXMLLoader loader = new FXMLLoader(helloFxml.getURL());
+            FXMLLoader loader = new FXMLLoader(ammoFxml.getURL());
             loader.setControllerFactory(controllerClass -> springContext.getBean(controllerClass));
             Parent parent = loader.load();
             Stage stage = event.getStage();
-            stage.setScene(new Scene(parent, 800, 600));
+            stage.setScene(new Scene(parent, 600, 500));
             stage.show();
 
 
