@@ -24,6 +24,9 @@ public class SupplyStation {
     @PositiveOrZero
     private Integer capacity;
 
+    @PositiveOrZero
+    private Integer ammunition;
+
     @NotBlank(message = "Location is mandatory")
     @Size(min = 2, max = 255)
     private String location;
@@ -31,7 +34,7 @@ public class SupplyStation {
     @ElementCollection
     @CollectionTable(name = "SUPPLIES", joinColumns = @JoinColumn(name = "supplySite_id"))
     @Builder.Default
-    private Set<String> fighters = new HashSet<>();
+    private Set<String> supplies = new HashSet<>();
 
     @OneToMany(mappedBy = "supplyStation", orphanRemoval = true)
     @Builder.Default
