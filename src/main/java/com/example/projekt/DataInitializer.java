@@ -1,8 +1,10 @@
 package com.example.projekt;
 
 import com.example.projekt.model.ArtillerySite;
+import com.example.projekt.model.AssociationsClasses.ArtillerySite_SupplyStation;
 import com.example.projekt.model.Enums.ArtillerySiteState;
 import com.example.projekt.model.FireOrder;
+import com.example.projekt.model.SupplyStation;
 import com.example.projekt.model._Employee;
 import com.example.projekt.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashSet;
 
 @Component
 @RequiredArgsConstructor
@@ -79,6 +82,40 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
                     .artillerySite(artillerySiteRepository.findById(1L).get())
                     .build();
             fireOrderRepository.saveAll(Arrays.asList(fireOrder1, fireOrder2));
+        }
+        boolean supplyStationExists = supplyStationRepository.count() > 0;
+        if (!supplyStationExists){
+            SupplyStation supplyStation1 = SupplyStation.builder()
+                    .capacity(2000)
+                    .ammunition(200)
+                    .location("Gdynia")
+                    .supplies(new HashSet<>(Arrays.asList("food", "medical supplies")))
+                    .build();
+
+
+            SupplyStation supplyStation2 = SupplyStation.builder()
+                    .capacity(1500)
+                    .ammunition(800)
+                    .location("Olsztyn")
+                    .supplies(new HashSet<>(Arrays.asList("food", "medical supplies")))
+                    .build();
+
+            supplyStationRepository.saveAll(Arrays.asList(supplyStation1, supplyStation2));
+        }
+
+        boolean artySupplyExists = artillerySupplyRepository.count() > 0;
+        if (!artySupplyExists){
+            ArtillerySite_SupplyStation artillerySite_supplyStation1 = ArtillerySite_SupplyStation.builder()
+                    .artillerySite(artillerySiteRepository.findById(1L).get())
+                    .supplyStation(supplyStationRepository.findById(1L).get())
+                    .build();
+
+            ArtillerySite_SupplyStation artillerySite_supplyStation2 = ArtillerySite_SupplyStation.builder()
+                    .artillerySite(artillerySiteRepository.findById(1L).get())
+                    .supplyStation(supplyStationRepository.findById(2L).get())
+                    .build();
+
+            artillerySupplyRepository.saveAll(Arrays.asList(artillerySite_supplyStation1, artillerySite_supplyStation2));
         }
     }
 
