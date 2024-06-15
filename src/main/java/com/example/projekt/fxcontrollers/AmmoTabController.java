@@ -89,14 +89,12 @@ public class AmmoTabController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         serviceList = (List<Service>) serviceRepository.findAll();
         artillerySites = (List<ArtillerySite>) artillerySiteRepository.findAll();
+        fireOrders = (List<FireOrder>) fireOrderRepository.findAll();
+        artillerySiteSupplyStations = (List<ArtillerySite_SupplyStation>) artillerySupplyRepository.findAll();
+        supplyStations = (List<SupplyStation>) supplyStationRepository.findAll();
 
-        System.out.println(fireOrders);
-//        fireOrders = fireOrderRepository.fin
 
         loadArtilleryComboBoxInfo(artillerySites);
-
-
-
 
 /*        // Obsługa przycisku zamówienia
         order_button.setOnAction(event -> {
@@ -129,26 +127,24 @@ public class AmmoTabController implements Initializable {
             String selectedArtillerySite = artillery_ComboBox.getSelectionModel().getSelectedItem();
 
             //Pobieranie ArtillerySite po wybroaniu opcji
-            ArtillerySite test = artillerySites.stream()
+            ArtillerySite choosedArtillerySite = artillerySites.stream()
                     .filter(artillerySite -> artillerySite.getLocation().equals(selectedArtillerySite))
                     .findAny()
                     .orElseThrow(() -> new RuntimeException("Artillery site not found"));
 
-            fireOrders = (List<FireOrder>) fireOrderRepository.findAll();
             List<FireOrder> filteredFireOrders = fireOrders.stream()
-                    .filter(fireOrder -> fireOrder.getArtillerySite().equals(test))
+                    .filter(fireOrder -> fireOrder.getArtillerySite().equals(choosedArtillerySite))
                     .collect(Collectors.toList());
 
-            System.out.println(filteredFireOrders == null ? 0 : 0);
-
-            loadArtillerySiteInfo(test, filteredFireOrders);
+            loadArtillerySiteInfo(choosedArtillerySite, filteredFireOrders);
+            loadSupplyStationComboBox(choosedArtillerySite);
         });
     }
 
     private void loadArtillerySiteInfo(ArtillerySite artillerySite, List<FireOrder> fireOrders){
         cannons_field.setText(String.valueOf(artillerySite.getCannons()));
         ammo_artillery_field.setText(String.valueOf(artillerySite.getAmmunition()));
-        waiting_orders_field.setText(fireOrders == null ? String.valueOf(fireOrders.size()) : "0");
+        waiting_orders_field.setText(fireOrders != null ? String.valueOf(fireOrders.size()) : "0");
         int ammoNeeded = artillerySite.getCannons()-artillerySite.getAmmunition()+1;
 
         if (ammoNeeded >= 0) {
@@ -156,6 +152,25 @@ public class AmmoTabController implements Initializable {
         } else {
             ammo_needed_field.setText(String.valueOf(0));
         }
-//        ammo_needed_field.setText(String.valueOf((artillerySite.getAmmunition()-artillerySite.getCannons()+1)));
+    }
+
+    private void loadSupplyStationComboBox(ArtillerySite artillerySite){
+        List<String> supplyStationLocations = artillerySiteSupplyStations.stream()
+                .filter(artillerySite_supplyStation -> artillerySite_supplyStation.getArtillerySite().equals(artillerySite))
+                .map(artillerySite_supplyStation -> artillerySite_supplyStation.getSupplyStation().getLocation())
+                .collect(Collectors.toList());
+
+        supply_ComboBox.getItems().clear();
+
+        if (supplyStationLocations.isEmpty()){
+            supply_ComboBox.getItems().add("<Wybierz stacje>");
+            supply_ComboBox.getSelectionModel().select(0);
+            error_massage_supply_search.setVisible(true);
+        } else {
+            supply_ComboBox.getItems().addAll(supplyStationLocations);
+            supply_ComboBox.getSelectionModel().select("<Wybierz stacje>");
+            error_massage_supply_search.setVisible(false);
+        }
+
     }
 }
