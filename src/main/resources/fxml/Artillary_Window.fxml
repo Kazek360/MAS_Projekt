@@ -34,13 +34,13 @@
                     <children>
                         <VBox alignment="TOP_CENTER" prefHeight="391.0" prefWidth="508.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <ComboBox fx:id="artillery_ComboBox" prefHeight="20.0" prefWidth="200.0" promptText="&lt;Wybierz stanowisko&gt;">
+                                <ComboBox id="artilleryComboBox" fx:id="artillery_ComboBox" prefHeight="20.0" prefWidth="200.0" promptText="&lt;Wybierz stanowisko&gt;">
                                     <VBox.margin>
                                         <Insets top="30.0" />
                                     </VBox.margin>
                                 </ComboBox>
-                                <Text fx:id="error_massage_artillery_search" fill="RED" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Nie jesteś przypisany do żadnego stanowiska artyleryjskiego!!!" textAlignment="CENTER" textOrigin="CENTER" visible="false" wrappingWidth="200.0" />
-                                <SplitPane fx:id="split_pane" dividerPositions="0.5" prefHeight="1000.0" prefWidth="583.0" visible="false">
+                                <Text id="errorMassageArtillerySearch" fx:id="error_massage_artillery_search" fill="RED" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Nie jesteś przypisany do żadnego stanowiska artyleryjskiego!!!" textAlignment="CENTER" textOrigin="CENTER" visible="false" wrappingWidth="200.0" />
+                                <SplitPane id="splitPane" fx:id="split_pane" dividerPositions="0.5" prefHeight="1000.0" prefWidth="583.0">
                                     <items>
                                         <GridPane fx:id="leftGridPane" prefHeight="241.0" prefWidth="205.0">
                                             <columnConstraints>
@@ -82,7 +82,7 @@
                                     </HBox>
                                                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                                                     <children>
-                                                        <Text fx:id="cannons_field" strokeType="OUTSIDE" strokeWidth="0.0" text="4">
+                                                        <Text id="cannonsField" fx:id="cannons_field" strokeType="OUTSIDE" strokeWidth="0.0" text="4">
                                                             <HBox.margin>
                                                                 <Insets />
                                                             </HBox.margin>
@@ -91,7 +91,7 @@
                                                 </HBox>
                                                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                     <children>
-                                                        <Text fx:id="ammo_artillery_field" strokeType="OUTSIDE" strokeWidth="0.0" text="120">
+                                                        <Text id="ammoArtilleryField" fx:id="ammo_artillery_field" strokeType="OUTSIDE" strokeWidth="0.0" text="120">
                                                             <HBox.margin>
                                                                 <Insets />
                                                             </HBox.margin>
@@ -110,12 +110,12 @@
                                                 </VBox>
                                                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                     <children>
-                                                        <Text fx:id="waiting_orders_field" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
+                                                        <Text id="waitingOrdersField" fx:id="waiting_orders_field" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
                                                     </children>
                                                 </VBox>
                                                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                     <children>
-                                                        <Text fx:id="ammo_needed_field" strokeType="OUTSIDE" strokeWidth="0.0" text="30" />
+                                                        <Text id="ammoNeededField" fx:id="ammo_needed_field" strokeType="OUTSIDE" strokeWidth="0.0" text="30" />
                                                     </children>
                                                 </VBox>
                                             </children>
@@ -132,11 +132,11 @@
                                             <children>
                                                 <VBox fx:id="search_Supply_VBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                                                     <children>
-                                                        <ComboBox fx:id="supply_ComboBox" prefWidth="150.0" promptText="&lt;Wybierz stacje&gt;" />
-                                                        <Text fx:id="error_massage_supply_search" fill="RED" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Stanowisko nie jest połączone z stacją zaopatrzenia!!!" textAlignment="CENTER" textOrigin="CENTER" visible="false" wrappingWidth="200.0" />
+                                                        <ComboBox id="supplyComboBox" fx:id="supply_ComboBox" prefWidth="150.0" promptText="&lt;Wybierz stacje&gt;" />
+                                                        <Text id="errorMassageSupplySearch" fx:id="error_massage_supply_search" fill="RED" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Stanowisko nie jest połączone z stacją zaopatrzenia!!!" textAlignment="CENTER" textOrigin="CENTER" visible="false" wrappingWidth="200.0" />
                                                     </children>
                                                 </VBox>
-                                                <HBox fx:id="supply_ammo_hbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false" GridPane.rowIndex="1">
+                                                <HBox id="supplyAmmoHbox" fx:id="supply_ammo_hbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                                                     <children>
                                                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                                             <image>
@@ -151,23 +151,23 @@
                                                                 <Insets right="10.0" />
                                                             </HBox.margin>
                                                         </Text>
-                                                        <Text fx:id="ammo_supply_field" strokeType="OUTSIDE" strokeWidth="0.0" text="100" />
+                                                        <Text id="ammoSupplyField" fx:id="ammo_supply_field" strokeType="OUTSIDE" strokeWidth="0.0" text="100" />
                                                     </children>
                                                 </HBox>
-                                                <VBox fx:id="order_value_vbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" visible="false" GridPane.rowIndex="2">
+                                                <VBox id="orderValueVbox" fx:id="order_value_vbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
                                                     <children>
                                                         <HBox alignment="CENTER" prefHeight="32.0" prefWidth="304.0">
                                                             <children>
                                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Zamówienie:" wrappingWidth="66.744140625" />
-                                                                <TextField fx:id="ammo_order_field" prefHeight="25.0" prefWidth="50.0">
+                                                                <TextField id="ammoOrderField" fx:id="ammo_order_field" prefHeight="25.0" prefWidth="50.0">
                                                                     <HBox.margin>
                                                                         <Insets left="10.0" />
                                                                     </HBox.margin>
                                                                 </TextField>
                                                             </children>
                                                         </HBox>
-                                                        <Text fx:id="error_massage_ammo_order" fill="RED" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Błędna wartość!!!" textAlignment="CENTER" textOrigin="CENTER" visible="false" wrappingWidth="200.0" />
-                                                        <Button fx:id="order_button" mnemonicParsing="false" text="Zamów" />
+                                                        <Text id="errorMassageAmmoOrder" fx:id="error_massage_ammo_order" fill="RED" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Błędna wartość!!!" textAlignment="CENTER" textOrigin="CENTER" visible="false" wrappingWidth="200.0" />
+                                                        <Button fx:id="order_button" mnemonicParsing="false" styleClass="orderButton" text="Zamów" />
                                                     </children>
                                                 </VBox>
                                             </children>

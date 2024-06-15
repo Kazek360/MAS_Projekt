@@ -14,25 +14,21 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * A class which creates first FX GUI View. Its invoked via event from  
+ * A class which creates first FX GUI View. Its invoked via event from
  */
 @Component
 @RequiredArgsConstructor
 public class StageInitializer implements ApplicationListener<FXApplication.StageReadyEvent> {
 
-    @Value("classpath:/fxml/Hello.fxml")
-    private Resource helloFxml;
-
-    @Value("classpath:/fxml/Ammunition_Chose_Artillery.fxml")
+    @Value("classpath:/fxml/Artillary_Window.fxml")
     private Resource ammoFxml;
     private final ApplicationContext springContext;
 
     @Override
     public void onApplicationEvent(FXApplication.StageReadyEvent event) {
         try {
-//            FXMLLoader loader = new FXMLLoader(helloFxml.getURL());
             FXMLLoader loader = new FXMLLoader(ammoFxml.getURL());
-            loader.setControllerFactory(controllerClass -> springContext.getBean(controllerClass));
+            loader.setControllerFactory(springContext::getBean);
             Parent parent = loader.load();
             Stage stage = event.getStage();
             stage.setScene(new Scene(parent, 600, 500));
