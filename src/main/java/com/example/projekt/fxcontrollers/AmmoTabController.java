@@ -163,8 +163,7 @@ public class AmmoTabController implements Initializable {
         supply_ComboBox.getItems().clear();
 
         if (supplyStationLocations.isEmpty()){
-            supply_ComboBox.getItems().add("<Wybierz stacje>");
-            supply_ComboBox.getSelectionModel().select(0);
+            supply_ComboBox.getSelectionModel().select("<Wybierz stacje>");
             error_massage_supply_search.setVisible(true);
         } else {
             supply_ComboBox.getItems().addAll(supplyStationLocations);
