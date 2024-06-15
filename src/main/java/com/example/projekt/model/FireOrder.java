@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -28,7 +29,7 @@ public class FireOrder {
 
     @FutureOrPresent(message = "The date cannot be earlier than the current date")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date date;
+    private LocalDate date;
 
     @NotBlank(message = "Barage location is mandatory")
     @Size(min = 2, max = 255)
