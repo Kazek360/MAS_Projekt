@@ -40,7 +40,7 @@
                                     </VBox.margin>
                                 </ComboBox>
                                 <Text id="errorMassageArtillerySearch" fx:id="error_massage_artillery_search" fill="RED" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Nie jesteś przypisany do żadnego stanowiska artyleryjskiego!!!" textAlignment="CENTER" textOrigin="CENTER" visible="false" wrappingWidth="200.0" />
-                                <SplitPane id="splitPane" fx:id="split_pane" dividerPositions="0.5" prefHeight="1000.0" prefWidth="583.0">
+                                <SplitPane id="splitPane" fx:id="split_pane" dividerPositions="0.5" prefHeight="1000.0" prefWidth="583.0" visible="false">
                                     <items>
                                         <GridPane fx:id="leftGridPane" prefHeight="241.0" prefWidth="205.0">
                                             <columnConstraints>
@@ -136,7 +136,7 @@
                                                         <Text id="errorMassageSupplySearch" fx:id="error_massage_supply_search" fill="RED" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Stanowisko nie jest połączone z stacją zaopatrzenia!!!" textAlignment="CENTER" textOrigin="CENTER" visible="false" wrappingWidth="200.0" />
                                                     </children>
                                                 </VBox>
-                                                <HBox id="supplyAmmoHbox" fx:id="supply_ammo_hbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                                <HBox id="supplyAmmoHbox" fx:id="supply_ammo_hbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false" GridPane.rowIndex="1">
                                                     <children>
                                                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                                             <image>
@@ -154,7 +154,7 @@
                                                         <Text id="ammoSupplyField" fx:id="ammo_supply_field" strokeType="OUTSIDE" strokeWidth="0.0" text="100" />
                                                     </children>
                                                 </HBox>
-                                                <VBox id="orderValueVbox" fx:id="order_value_vbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+                                                <VBox id="orderValueVbox" fx:id="order_value_vbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" visible="false" GridPane.rowIndex="2">
                                                     <children>
                                                         <HBox alignment="CENTER" prefHeight="32.0" prefWidth="304.0">
                                                             <children>

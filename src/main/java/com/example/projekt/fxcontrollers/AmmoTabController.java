@@ -1,5 +1,11 @@
 package com.example.projekt.fxcontrollers;
 
+import com.example.projekt.model.ArtillerySite;
+import com.example.projekt.model.AssociationsClasses.ArtillerySite_SupplyStation;
+import com.example.projekt.model.FireOrder;
+import com.example.projekt.model.Service;
+import com.example.projekt.model.SupplyStation;
+import com.example.projekt.repository.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -13,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Component
@@ -64,23 +72,28 @@ public class AmmoTabController implements Initializable {
     @FXML
     private Button order_button;
 
+    private final ServiceRepository serviceRepository;
+    private final ArtillerySiteRepository artillerySiteRepository;
+    private final FireOrderRepository fireOrderRepository;
+    private final ArtillerySite_SupplyStationRepository artillerySupplyRepository;
+    private final SupplyStationRepository supplyStationRepository;
+
+    private List<Service> serviceList;
+    private List<ArtillerySite> artillerySites;
+    private List<FireOrder> fireOrders;
+    private List<ArtillerySite_SupplyStation> artillerySiteSupplyStations;
+    private List<SupplyStation> supplyStations;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Ustawienia początkowe ComboBox
-        artillery_ComboBox.getItems().addAll("Stanowisko 1", "Stanowisko 2", "Stanowisko 3");
-//        supply_ComboBox.getItems().addAll("Stacja 1", "Stacja 2", "Stacja 3");
+        serviceList = (List<Service>) serviceRepository.findAll();
+        artillerySites = (List<ArtillerySite>) artillerySiteRepository.findAll();
+//        fireOrders = fireOrderRepository.fin
 
-        // Ustawienia początkowe tekstów
-        cannons_field.setText(String.valueOf(2));
-        ammo_artillery_field.setText("120");
-        waiting_orders_field.setText("2");
-        ammo_needed_field.setText("30");
-        ammo_supply_field.setText("100");
+        loadArtilleryComboBoxInfo(artillerySites);
 
-        artillery_ComboBox.setOnAction(e -> {
-            boolean isSelected = artillery_ComboBox.getSelectionModel().getSelectedItem() != null;
-            split_pane.setVisible(isSelected);
-        });
+
+
 
 /*        // Obsługa przycisku zamówienia
         order_button.setOnAction(event -> {
@@ -96,5 +109,43 @@ public class AmmoTabController implements Initializable {
                 error_massage_ammo_order.setVisible(true);
             }
         });*/
+    }
+
+    private void loadArtilleryComboBoxInfo(List<ArtillerySite> artillerySites){
+
+        List<String> artySiteLocations = artillerySites.stream()
+                .map(ArtillerySite::getLocation).toList();
+
+        artillery_ComboBox.getItems().addAll(artySiteLocations);
+
+        //Co się dzieje po wybraniu danej opcji.
+        artillery_ComboBox.setOnAction(e -> {
+            boolean isSelected = artillery_ComboBox.getSelectionModel().getSelectedItem() != null;
+            split_pane.setVisible(isSelected);
+
+            String selectedArtillerySite = artillery_ComboBox.getSelectionModel().getSelectedItem();
+
+            //Pobieranie ArtillerySite po wybroaniu opcji
+            ArtillerySite test = artillerySites.stream()
+                    .filter(artillerySite -> artillerySite.getLocation().equals(selectedArtillerySite))
+                    .findAny()
+                    .orElseThrow(() -> new RuntimeException("Artillery site not found"));
+
+            loadArtillerySiteInfo(test);
+        });
+    }
+
+    private void loadArtillerySiteInfo(ArtillerySite artillerySite){
+        cannons_field.setText(String.valueOf(artillerySite.getCannons()));
+        ammo_artillery_field.setText(String.valueOf(artillerySite.getAmmunition()));
+        waiting_orders_field.setText(String.valueOf(artillerySite.getFireOrders().size()));
+        int ammoNeeded = artillerySite.getCannons()-artillerySite.getAmmunition()+1;
+
+        if (ammoNeeded >= 0) {
+            ammo_needed_field.setText(String.valueOf(ammoNeeded));
+        } else {
+            ammo_needed_field.setText(String.valueOf(0));
+        }
+//        ammo_needed_field.setText(String.valueOf((artillerySite.getAmmunition()-artillerySite.getCannons()+1)));
     }
 }
