@@ -22,6 +22,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -88,6 +89,8 @@ public class AmmoTabController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         serviceList = (List<Service>) serviceRepository.findAll();
         artillerySites = (List<ArtillerySite>) artillerySiteRepository.findAll();
+
+        System.out.println(fireOrders);
 //        fireOrders = fireOrderRepository.fin
 
         loadArtilleryComboBoxInfo(artillerySites);
@@ -131,14 +134,21 @@ public class AmmoTabController implements Initializable {
                     .findAny()
                     .orElseThrow(() -> new RuntimeException("Artillery site not found"));
 
-            loadArtillerySiteInfo(test);
+            fireOrders = (List<FireOrder>) fireOrderRepository.findAll();
+            List<FireOrder> filteredFireOrders = fireOrders.stream()
+                    .filter(fireOrder -> fireOrder.getArtillerySite().equals(test))
+                    .collect(Collectors.toList());
+
+            System.out.println(filteredFireOrders == null ? 0 : 0);
+
+            loadArtillerySiteInfo(test, filteredFireOrders);
         });
     }
 
-    private void loadArtillerySiteInfo(ArtillerySite artillerySite){
+    private void loadArtillerySiteInfo(ArtillerySite artillerySite, List<FireOrder> fireOrders){
         cannons_field.setText(String.valueOf(artillerySite.getCannons()));
         ammo_artillery_field.setText(String.valueOf(artillerySite.getAmmunition()));
-        waiting_orders_field.setText(String.valueOf(artillerySite.getFireOrders().size()));
+        waiting_orders_field.setText(fireOrders == null ? String.valueOf(fireOrders.size()) : "0");
         int ammoNeeded = artillerySite.getCannons()-artillerySite.getAmmunition()+1;
 
         if (ammoNeeded >= 0) {
