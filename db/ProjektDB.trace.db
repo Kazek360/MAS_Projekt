@@ -1,5 +1,0 @@
-2024-06-14 21:51:30.094252+02:00 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "SELECT * FROM ""_EMPLOYEE""\000d\000aINSERT [*]INTO _EMPLOYEE VALUES (3,'Kamil', 'Zdun')"
-Syntax error in SQL statement "SELECT * FROM ""_EMPLOYEE""\000d\000aINSERT [*]INTO _EMPLOYEE VALUES (3,'Kamil', 'Zdun')"; SQL statement:
-SELECT * FROM "_EMPLOYEE"
-INSERT INTO _EMPLOYEE VALUES (3,'Kamil', 'Zdun') [42000-224]
