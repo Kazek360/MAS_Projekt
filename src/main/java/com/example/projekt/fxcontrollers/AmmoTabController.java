@@ -162,14 +162,48 @@ public class AmmoTabController implements Initializable {
 
         supply_ComboBox.getItems().clear();
 
+
         if (supplyStationLocations.isEmpty()){
-            supply_ComboBox.getSelectionModel().select("<Wybierz stacje>");
+
+            supply_ComboBox.getItems().add("<Wybierz stacje>");
+            supply_ComboBox.getSelectionModel().selectFirst();
+//            supply_ComboBox.getItems().clear();
+//            supply_ComboBox.getSelectionModel().select("<Wybierz stacje>");
             error_massage_supply_search.setVisible(true);
+//            supply_ComboBox.setPromptText("<Wybierz stacje>");
         } else {
             supply_ComboBox.getItems().addAll(supplyStationLocations);
             supply_ComboBox.getSelectionModel().select("<Wybierz stacje>");
             error_massage_supply_search.setVisible(false);
+
         }
+
+
+        supply_ComboBox.setOnAction(e -> {
+            String isSelected = supply_ComboBox.getSelectionModel().getSelectedItem();
+            if (isSelected != null && !isSelected.equals("<Wybierz stacje>")){
+                supply_ammo_hbox.setVisible(true);
+                order_value_vbox.setVisible(true);
+
+                String selectedSupplyStation = supply_ComboBox.getSelectionModel().getSelectedItem();
+                System.out.println(selectedSupplyStation);
+                SupplyStation choosedSupplyStations = supplyStations.stream()
+                        .filter(supplyStation -> supplyStation.getLocation().equals(selectedSupplyStation))
+                        .findAny()
+                        .orElseThrow(() -> new RuntimeException("Supply station not found"));
+
+            } else {
+                supply_ammo_hbox.setVisible(false);
+                order_value_vbox.setVisible(false);
+            }
+
+        });
+
+
+
+    }
+
+    private void loadSupplyStationInfo(){
 
     }
 }
