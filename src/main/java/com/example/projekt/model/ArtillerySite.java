@@ -2,6 +2,7 @@ package com.example.projekt.model;
 
 import com.example.projekt.model.AssociationsClasses.ArtillerySite_SupplyStation;
 import com.example.projekt.model.Enums.ArtillerySiteState;
+import com.example.projekt.model.Validation.FireOrderComparator;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -11,6 +12,7 @@ import lombok.*;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 @Data
@@ -52,6 +54,6 @@ public class ArtillerySite {
     @OneToMany(mappedBy = "artillerySite", orphanRemoval = true, cascade = CascadeType.REMOVE)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<FireOrder> fireOrders = new LinkedHashSet<>();
+    private Set<FireOrder> fireOrders = new TreeSet<>(new FireOrderComparator());
 
 }

@@ -52,6 +52,8 @@ public abstract class Soldier {
     @Column(name = "training_level", nullable = false)
     private TrainingLevel trainingLevel;
 
+
+
     //Quartermaster
     @Min(1)
     private Integer loadCapacity;
@@ -82,5 +84,36 @@ public abstract class Soldier {
     @ValidSoldierSpecialization(SpecializationType.MEDIC)
     private void provideFirstAid(){
         System.out.println("Providing first aid");
+    }
+
+
+    @ValidSoldierSpecialization(SpecializationType.QUARTERMASTER)
+    public void setLoadCapacity(Integer loadCapacity) {
+        this.loadCapacity = loadCapacity;
+    }
+
+    @ValidSoldierSpecialization(SpecializationType.QUARTERMASTER)
+    public void setSupplyPayBonus(Integer supplyPayBonus) {
+        this.supplyPayBonus = supplyPayBonus;
+    }
+
+    @ValidSoldierSpecialization(SpecializationType.MEDIC)
+    public void setMedicCourses(Set<String> medicCourses) {
+        this.medicCourses = medicCourses;
+    }
+
+    @ValidSoldierSpecialization(SpecializationType.MEDIC)
+    public void setMedicPayBonus(Integer medicPayBonus) {
+        this.medicPayBonus = medicPayBonus;
+    }
+
+    @ValidSoldierSpecialization(SpecializationType.SPECIALIST)
+    public void setSpecialities(Set<String> specialities) {
+        this.specialities = specialities;
+    }
+
+    @ValidSoldierSpecialization(SpecializationType.SPECIALIST)
+    public void setSpecialitiesPayBonus(Integer specialitiesPayBonus) {
+        this.specialitiesPayBonus = specialitiesPayBonus;
     }
 }
