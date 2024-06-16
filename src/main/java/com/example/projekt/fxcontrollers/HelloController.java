@@ -1,7 +1,5 @@
 package com.example.projekt.fxcontrollers;
 
-import com.example.projekt.model._Employee;
-import com.example.projekt.repository._EmployeeRepository;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import lombok.RequiredArgsConstructor;

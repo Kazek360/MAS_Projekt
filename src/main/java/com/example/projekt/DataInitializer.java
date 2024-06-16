@@ -5,7 +5,6 @@ import com.example.projekt.model.AssociationsClasses.ArtillerySite_SupplyStation
 import com.example.projekt.model.Enums.ArtillerySiteState;
 import com.example.projekt.model.FireOrder;
 import com.example.projekt.model.SupplyStation;
-import com.example.projekt.model._Employee;
 import com.example.projekt.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationListener;
@@ -20,7 +19,6 @@ import java.util.HashSet;
 @RequiredArgsConstructor
 public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
 
-    private final _EmployeeRepository empRepo;
     private final ArtillerySiteRepository artillerySiteRepository;
     private final FireOrderRepository fireOrderRepository;
     private final ArtillerySite_SupplyStationRepository artillerySupplyRepository;
@@ -32,21 +30,6 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     }
 
     private void initData() {
-        boolean employeeExists = empRepo.count() > 0;
-        if (!employeeExists) {
-
-            _Employee e1 = _Employee.builder()
-                    .firstName("Jan")
-                    .lastName("Kowalski")
-                    .build();
-            _Employee e2 = _Employee.builder()
-                    .firstName("Adam")
-                    .lastName("Nowak")
-                    .build();
-
-            empRepo.saveAll(Arrays.asList(e1, e2));
-
-        }
         boolean artilleryExists = artillerySiteRepository.count() > 0;
         if (!artilleryExists) {
             ArtillerySite artillerySite1 = ArtillerySite.builder()
