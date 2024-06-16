@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 public class Sailor extends Soldier implements ISailor {
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "searank", nullable = false)
     private SeaRank seaRank;
 

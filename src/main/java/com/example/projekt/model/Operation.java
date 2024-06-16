@@ -21,7 +21,7 @@ public class Operation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "operation_type", nullable = false)
     private OperationType operationType;
 

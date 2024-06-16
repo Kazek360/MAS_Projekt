@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<TabPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="529.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="30.0" tabMinWidth="100.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projekt.fxcontrollers.AmmoTabController">
+<TabPane id="tabPane" fx:id="tabPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="529.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="30.0" tabMinWidth="100.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projekt.fxcontrollers.AmmoTabController">
     <tabs>
         <Tab closable="false" text="Rozkaz ogniowy">
             <content>

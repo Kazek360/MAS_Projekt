@@ -8,13 +8,11 @@ import com.example.projekt.model.SupplyStation;
 import com.example.projekt.repository.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +24,9 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class AmmoTabController implements Initializable {
+
+    @FXML
+    private TabPane tabPane;
 
     @FXML
     private ComboBox<String> artillery_ComboBox;
@@ -84,6 +85,8 @@ public class AmmoTabController implements Initializable {
     private List<ArtillerySite_SupplyStation> artillerySiteSupplyStations;
     private List<SupplyStation> supplyStations;
 
+    private String testSoldier = "123";
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         serviceList = (List<Service>) serviceRepository.findAll();
@@ -92,9 +95,19 @@ public class AmmoTabController implements Initializable {
         artillerySiteSupplyStations = (List<ArtillerySite_SupplyStation>) artillerySupplyRepository.findAll();
         supplyStations = (List<SupplyStation>) supplyStationRepository.findAll();
 
-        loadArtilleryComboBoxInfo(artillerySites);
+        if (testSoldier.equals("123")){
+            error_massage_artillery_search.setVisible(false);
+            loadArtilleryComboBoxInfo(artillerySites);
+        } else {
+            error_massage_artillery_search.setVisible(true);
+        }
     }
 
+    /**
+     * Wyświetlanie listy stanowisk artyleryjskich.
+     *
+     * @param artillerySites lista stanowisk artyleryjskich które będą się wyświetlać w liście rozwijanej
+     */
     private void loadArtilleryComboBoxInfo(List<ArtillerySite> artillerySites) {
 
         List<String> artySiteLocations = artillerySites.stream()
@@ -111,6 +124,13 @@ public class AmmoTabController implements Initializable {
         });
     }
 
+
+    /**
+     * Wyświetlanie podstawowych informacji o stanowisku artyleryjskim
+     *
+     * @param artillerySite stanowisko artyleryjskie dla którego będziemy wypisywać informacje
+     * @param fireOrders rozkazy ogniowe przypisane do tego stanowiska artyleryjskiego
+     */
     private void loadArtillerySiteInfo(ArtillerySite artillerySite, List<FireOrder> fireOrders) {
         cannons_field.setText(String.valueOf(artillerySite.getCannons()));
         ammo_artillery_field.setText(String.valueOf(artillerySite.getAmmunition()));
@@ -124,7 +144,14 @@ public class AmmoTabController implements Initializable {
         }
     }
 
+    /**
+     * Wyświetlanie listy stacji zaopatrzeniowych.
+     *
+     * @param artillerySite stanowisko artyleryjskie dla którego będziemy wyświetlać przypisane stacje zaopatrzeniowe
+     */
     private void loadSupplyStationComboBox(ArtillerySite artillerySite) {
+
+        //Wyszukiwanie stacji zaopatrzeniowych przypisanych do artylerii. Używam klasy asocjacyjnej
         List<String> supplyStationLocations = artillerySiteSupplyStations.stream()
                 .filter(artillerySite_supplyStation -> artillerySite_supplyStation.getArtillerySite().equals(artillerySite))
                 .map(artillerySite_supplyStation -> artillerySite_supplyStation.getSupplyStation().getLocation())
@@ -140,8 +167,8 @@ public class AmmoTabController implements Initializable {
 
         } else {
 
-            supply_ComboBox.getItems().addAll(supplyStationLocations);
             supply_ComboBox.getSelectionModel().select("<Wybierz stacje>");
+            supply_ComboBox.getItems().addAll(supplyStationLocations);
             error_massage_supply_search.setVisible(false);
 
         }
@@ -161,7 +188,10 @@ public class AmmoTabController implements Initializable {
                         .findAny()
                         .orElseThrow(() -> new RuntimeException("Supply station not found"));
 
-                loadSupplyStationInfo(choosedSupplyStations);
+
+                //Ładowanie info o amunicji na stacji zaopatrzeniowej
+                ammo_supply_field.setText(String.valueOf(choosedSupplyStations.getAmmunition()));
+
                 loadOrderAmmoLogic(artillerySite, choosedSupplyStations);
             } else {
                 supply_ammo_hbox.setVisible(false);
@@ -171,10 +201,12 @@ public class AmmoTabController implements Initializable {
         });
     }
 
-    private void loadSupplyStationInfo(SupplyStation supplyStation) {
-        ammo_supply_field.setText(String.valueOf(supplyStation.getAmmunition()));
-    }
-
+    /**
+     * Cała logika zamawiania amunicji, wraz z robieniem updatów na baziw danuch.
+     *
+     * @param artillerySite stanowisko artyleryjskie go którego będziemy dostarczać amunicję
+     * @param supplyStation stacja zaopatrzneiowa z której będziemy amunicję pobierać.
+     */
     private void loadOrderAmmoLogic(ArtillerySite artillerySite, SupplyStation supplyStation) {
         ammo_order_field.setText("");
         error_massage_ammo_order.setVisible(false);
@@ -204,6 +236,9 @@ public class AmmoTabController implements Initializable {
         });
     }
 
+    /**
+     * Odświeżanie informacji o stanowiskach artyleryjskich oraz stacji zaopatrzeniowych
+     */
     private void refreshRepositoriesAndInfo() {
         artillerySites = (List<ArtillerySite>) artillerySiteRepository.findAll();
         supplyStations = (List<SupplyStation>) supplyStationRepository.findAll();
@@ -214,11 +249,14 @@ public class AmmoTabController implements Initializable {
         List<FireOrder> filteredFireOrders = getFilteredFireOrders(choosedArtillerySite);
 
         loadArtillerySiteInfo(choosedArtillerySite, filteredFireOrders);
-        System.out.println(filteredFireOrders);
+//        System.out.println(filteredFireOrders);
         loadSupplyStationComboBox(choosedArtillerySite);
     }
 
 
+    /**
+     * @return zwraca wybrane w liście stanowisko artyleryjskie
+     */
     private ArtillerySite getSelectedArtillerySite() {
         String currentArtillerySite = artillery_ComboBox.getSelectionModel().getSelectedItem();
 
@@ -228,6 +266,10 @@ public class AmmoTabController implements Initializable {
                 .orElseThrow(() -> new RuntimeException("Artillery site not found"));
     }
 
+    /**
+     * @param artillerySite stanowisko artyleryjskie dla jakiego szukamy połączonych stacji zaopatrzeniowych
+     * @return stacje zaopatrzeniowe przypisane do stanowiska artyleryjskiego
+     */
     private List<FireOrder> getFilteredFireOrders(ArtillerySite artillerySite) {
         return fireOrders.stream()
                 .filter(fireOrder -> fireOrder.getArtillerySite().equals(artillerySite))

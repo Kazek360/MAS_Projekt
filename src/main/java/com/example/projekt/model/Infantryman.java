@@ -19,6 +19,7 @@ public class Infantryman extends Soldier {
     @Builder.Default
     private Set<String> equipment = new HashSet<>();
 
+    //W obydwu powinno być false, zmienione bo inicjalizacja danych nie działała.
     @ManyToOne(optional = true)
     @JoinColumn(name = "unit_id", nullable = true)
     @ToString.Exclude

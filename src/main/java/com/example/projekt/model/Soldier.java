@@ -42,11 +42,11 @@ public abstract class Soldier {
     @Size(min = 2, max = 255)
     private String surname;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "rank", nullable = false)
     private Rank rank;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "training_level", nullable = false)
     private TrainingLevel trainingLevel;
 
