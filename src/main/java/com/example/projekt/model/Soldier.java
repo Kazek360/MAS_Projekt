@@ -1,8 +1,9 @@
 package com.example.projekt.model;
 
 import com.example.projekt.model.Enums.Rank;
+import com.example.projekt.model.Enums.SpecializationType;
 import com.example.projekt.model.Enums.TrainingLevel;
-import jakarta.annotation.Nullable;
+import com.example.projekt.model.Validation.ValidSoldierSpecialization;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +13,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -73,4 +73,14 @@ public abstract class Soldier {
     private Set<String> specialities = new HashSet<>();
 
     private Integer specialitiesPayBonus = 100;
+
+    @ValidSoldierSpecialization(SpecializationType.QUARTERMASTER)
+    private void deliverAmmo(int ammount){
+        System.out.println("Soldier will deliver: " + ammount + "artillary rounds");
+    }
+
+    @ValidSoldierSpecialization(SpecializationType.MEDIC)
+    private void provideFirstAid(){
+        System.out.println("Providing first aid");
+    }
 }
