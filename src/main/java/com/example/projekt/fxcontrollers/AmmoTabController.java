@@ -20,7 +20,6 @@ import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -93,26 +92,10 @@ public class AmmoTabController implements Initializable {
         artillerySiteSupplyStations = (List<ArtillerySite_SupplyStation>) artillerySupplyRepository.findAll();
         supplyStations = (List<SupplyStation>) supplyStationRepository.findAll();
 
-
         loadArtilleryComboBoxInfo(artillerySites);
-
-/*        // Obsługa przycisku zamówienia
-        order_button.setOnAction(event -> {
-            try {
-                int orderValue = Integer.parseInt(ammo_order_field.getText());
-                if (orderValue < 0) {
-                    throw new NumberFormatException();
-                }
-                // Tutaj możesz dodać logikę zamawiania amunicji
-                System.out.println("Zamówiono: " + orderValue);
-                error_massage_ammo_order.setVisible(false);
-            } catch (NumberFormatException e) {
-                error_massage_ammo_order.setVisible(true);
-            }
-        });*/
     }
 
-    private void loadArtilleryComboBoxInfo(List<ArtillerySite> artillerySites){
+    private void loadArtilleryComboBoxInfo(List<ArtillerySite> artillerySites) {
 
         List<String> artySiteLocations = artillerySites.stream()
                 .map(ArtillerySite::getLocation).toList();
@@ -123,29 +106,16 @@ public class AmmoTabController implements Initializable {
         artillery_ComboBox.setOnAction(e -> {
             boolean isSelected = artillery_ComboBox.getSelectionModel().getSelectedItem() != null;
             split_pane.setVisible(isSelected);
+            refreshRepositoriesAndInfo();
 
-            String selectedArtillerySite = artillery_ComboBox.getSelectionModel().getSelectedItem();
-
-            //Pobieranie ArtillerySite po wybroaniu opcji
-            ArtillerySite choosedArtillerySite = artillerySites.stream()
-                    .filter(artillerySite -> artillerySite.getLocation().equals(selectedArtillerySite))
-                    .findAny()
-                    .orElseThrow(() -> new RuntimeException("Artillery site not found"));
-
-            List<FireOrder> filteredFireOrders = fireOrders.stream()
-                    .filter(fireOrder -> fireOrder.getArtillerySite().equals(choosedArtillerySite))
-                    .collect(Collectors.toList());
-
-            loadArtillerySiteInfo(choosedArtillerySite, filteredFireOrders);
-            loadSupplyStationComboBox(choosedArtillerySite);
         });
     }
 
-    private void loadArtillerySiteInfo(ArtillerySite artillerySite, List<FireOrder> fireOrders){
+    private void loadArtillerySiteInfo(ArtillerySite artillerySite, List<FireOrder> fireOrders) {
         cannons_field.setText(String.valueOf(artillerySite.getCannons()));
         ammo_artillery_field.setText(String.valueOf(artillerySite.getAmmunition()));
         waiting_orders_field.setText(fireOrders != null ? String.valueOf(fireOrders.size()) : "0");
-        int ammoNeeded = artillerySite.getCannons()-artillerySite.getAmmunition()+1;
+        int ammoNeeded = artillerySite.getCannons() - artillerySite.getAmmunition() + 1;
 
         if (ammoNeeded >= 0) {
             ammo_needed_field.setText(String.valueOf(ammoNeeded));
@@ -154,7 +124,7 @@ public class AmmoTabController implements Initializable {
         }
     }
 
-    private void loadSupplyStationComboBox(ArtillerySite artillerySite){
+    private void loadSupplyStationComboBox(ArtillerySite artillerySite) {
         List<String> supplyStationLocations = artillerySiteSupplyStations.stream()
                 .filter(artillerySite_supplyStation -> artillerySite_supplyStation.getArtillerySite().equals(artillerySite))
                 .map(artillerySite_supplyStation -> artillerySite_supplyStation.getSupplyStation().getLocation())
@@ -162,16 +132,14 @@ public class AmmoTabController implements Initializable {
 
         supply_ComboBox.getItems().clear();
 
-
-        if (supplyStationLocations.isEmpty()){
+        if (supplyStationLocations.isEmpty()) {
 
             supply_ComboBox.getItems().add("<Wybierz stacje>");
             supply_ComboBox.getSelectionModel().selectFirst();
-//            supply_ComboBox.getItems().clear();
-//            supply_ComboBox.getSelectionModel().select("<Wybierz stacje>");
             error_massage_supply_search.setVisible(true);
-//            supply_ComboBox.setPromptText("<Wybierz stacje>");
+
         } else {
+
             supply_ComboBox.getItems().addAll(supplyStationLocations);
             supply_ComboBox.getSelectionModel().select("<Wybierz stacje>");
             error_massage_supply_search.setVisible(false);
@@ -181,29 +149,89 @@ public class AmmoTabController implements Initializable {
 
         supply_ComboBox.setOnAction(e -> {
             String isSelected = supply_ComboBox.getSelectionModel().getSelectedItem();
-            if (isSelected != null && !isSelected.equals("<Wybierz stacje>")){
+            if (isSelected != null && !isSelected.equals("<Wybierz stacje>")) {
                 supply_ammo_hbox.setVisible(true);
                 order_value_vbox.setVisible(true);
 
                 String selectedSupplyStation = supply_ComboBox.getSelectionModel().getSelectedItem();
-                System.out.println(selectedSupplyStation);
+
+
                 SupplyStation choosedSupplyStations = supplyStations.stream()
                         .filter(supplyStation -> supplyStation.getLocation().equals(selectedSupplyStation))
                         .findAny()
                         .orElseThrow(() -> new RuntimeException("Supply station not found"));
 
+                loadSupplyStationInfo(choosedSupplyStations);
+                loadOrderAmmoLogic(artillerySite, choosedSupplyStations);
             } else {
                 supply_ammo_hbox.setVisible(false);
                 order_value_vbox.setVisible(false);
             }
 
         });
-
-
-
     }
 
-    private void loadSupplyStationInfo(){
-
+    private void loadSupplyStationInfo(SupplyStation supplyStation) {
+        ammo_supply_field.setText(String.valueOf(supplyStation.getAmmunition()));
     }
+
+    private void loadOrderAmmoLogic(ArtillerySite artillerySite, SupplyStation supplyStation) {
+        ammo_order_field.setText("");
+        error_massage_ammo_order.setVisible(false);
+
+        order_button.setOnMouseClicked(e -> {
+
+            String order = ammo_order_field.getText();
+
+            if (order.isEmpty()) {
+
+                error_massage_ammo_order.setVisible(true);
+
+            } else if (order.chars().allMatch(Character::isDigit) && order.charAt(0) != '0' && Integer.parseInt(order) < supplyStation.getAmmunition()) {
+
+                error_massage_ammo_order.setVisible(false);
+
+                supplyStationRepository.updateAmmunition(supplyStation.getId(), supplyStation.getAmmunition() - Integer.parseInt(order));
+                artillerySiteRepository.updateAmmunition(artillerySite.getId(), artillerySite.getAmmunition() + Integer.parseInt(order));
+
+                refreshRepositoriesAndInfo();
+
+            } else {
+
+                error_massage_ammo_order.setVisible(true);
+
+            }
+        });
+    }
+
+    private void refreshRepositoriesAndInfo() {
+        artillerySites = (List<ArtillerySite>) artillerySiteRepository.findAll();
+        supplyStations = (List<SupplyStation>) supplyStationRepository.findAll();
+        fireOrders = (List<FireOrder>) fireOrderRepository.findAll();
+        artillerySiteSupplyStations = (List<ArtillerySite_SupplyStation>) artillerySupplyRepository.findAll();
+
+        ArtillerySite choosedArtillerySite = getSelectedArtillerySite();
+        List<FireOrder> filteredFireOrders = getFilteredFireOrders(choosedArtillerySite);
+
+        loadArtillerySiteInfo(choosedArtillerySite, filteredFireOrders);
+        System.out.println(filteredFireOrders);
+        loadSupplyStationComboBox(choosedArtillerySite);
+    }
+
+
+    private ArtillerySite getSelectedArtillerySite() {
+        String currentArtillerySite = artillery_ComboBox.getSelectionModel().getSelectedItem();
+
+        return artillerySites.stream()
+                .filter(artillerySite -> artillerySite.getLocation().equals(currentArtillerySite))
+                .findAny()
+                .orElseThrow(() -> new RuntimeException("Artillery site not found"));
+    }
+
+    private List<FireOrder> getFilteredFireOrders(ArtillerySite artillerySite) {
+        return fireOrders.stream()
+                .filter(fireOrder -> fireOrder.getArtillerySite().equals(artillerySite))
+                .collect(Collectors.toList());
+    }
+
 }
