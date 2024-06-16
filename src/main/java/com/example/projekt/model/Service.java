@@ -1,6 +1,7 @@
 package com.example.projekt.model;
 
 import com.example.projekt.model.Validation.ValidServiceDate;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.*;
@@ -35,6 +36,7 @@ public class Service {
     @FutureOrPresent(message = "The date cannot be earlier than the current date")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "date_to")
+    @Nullable
     private LocalDate dateTo;
 
     @ManyToOne

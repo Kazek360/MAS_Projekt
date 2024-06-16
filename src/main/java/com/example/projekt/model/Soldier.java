@@ -42,17 +42,16 @@ public abstract class Soldier {
     @Size(min = 2, max = 255)
     private String surname;
 
-    @NotBlank(message = "Rank is mandatory")
     @Enumerated
     @Column(name = "rank", nullable = false)
     private Rank rank;
 
-    @NotBlank(message = "Training level is mandatory")
     @Enumerated
     @Column(name = "training_level", nullable = false)
     private TrainingLevel trainingLevel;
 
-
+    @Min(1000)
+    private Integer pay;
 
     //Quartermaster
     @Min(1)
@@ -76,18 +75,18 @@ public abstract class Soldier {
 
     private Integer specialitiesPayBonus = 100;
 
-    @ValidSoldierSpecialization(SpecializationType.QUARTERMASTER)
-    private void deliverAmmo(int ammount){
-        System.out.println("Soldier will deliver: " + ammount + "artillary rounds");
+/*    @ValidSoldierSpecialization(SpecializationType.QUARTERMASTER)
+    public void deliverAmmo(int amount) {
+        System.out.println("Soldier will deliver: " + amount + " artillery rounds");
     }
 
     @ValidSoldierSpecialization(SpecializationType.MEDIC)
-    private void provideFirstAid(){
+    public void provideFirstAid() {
         System.out.println("Providing first aid");
-    }
+    }*/
 
 
-    @ValidSoldierSpecialization(SpecializationType.QUARTERMASTER)
+/*    @ValidSoldierSpecialization(SpecializationType.QUARTERMASTER)
     public void setLoadCapacity(Integer loadCapacity) {
         this.loadCapacity = loadCapacity;
     }
@@ -115,5 +114,5 @@ public abstract class Soldier {
     @ValidSoldierSpecialization(SpecializationType.SPECIALIST)
     public void setSpecialitiesPayBonus(Integer specialitiesPayBonus) {
         this.specialitiesPayBonus = specialitiesPayBonus;
-    }
+    }*/
 }

@@ -19,8 +19,8 @@ public class Infantryman extends Soldier {
     @Builder.Default
     private Set<String> equipment = new HashSet<>();
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "unit_id", nullable = false)
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "unit_id", nullable = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Unit unit;

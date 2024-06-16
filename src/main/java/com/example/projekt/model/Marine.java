@@ -25,17 +25,21 @@ public class Marine extends Infantryman implements ISailor{
     private Integer currentMissionsNumber;
 
     @Enumerated
-    @Column(name = "operational_status", nullable = false)
+    @Column(name = "sea_rank", nullable = false)
     private OperationalStatus operationalStatus;
+
+    @Enumerated
+    @Column(name = "operational_status", nullable = false)
+    private SeaRank seaRank;
 
     @Override
     public SeaRank getSeaRank() {
-        return null;
+        return seaRank;
     }
 
     @Override
     public void setSeaRank(SeaRank rank) {
-
+        this.seaRank = seaRank;
     }
 
     @Override
