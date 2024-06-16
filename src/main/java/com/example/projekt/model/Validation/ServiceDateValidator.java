@@ -16,11 +16,6 @@ public class ServiceDateValidator implements ConstraintValidator<ValidServiceDat
     public boolean isValid(Service service, ConstraintValidatorContext constraintValidatorContext) {
         LocalDate hireDate = service.getDateFrom();
         LocalDate fireDate = service.getDateTo();
-
-        if(fireDate != null && hireDate.isAfter(fireDate)) {
-            return false;
-        } else {
-            return true;
-        }
+        return fireDate == null || !hireDate.isAfter(fireDate);
     }
 }
