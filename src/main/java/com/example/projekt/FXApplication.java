@@ -27,6 +27,11 @@ public class FXApplication extends Application {
         //when app is started publish event that should trigger creation of GUI (in StageInitializer class)
         context.publishEvent(new StageReadyEvent(stage));
 
+        stage.setOnCloseRequest(event -> {
+            stage.close();
+            event.consume();
+        });
+
     }
 
     @Override
@@ -34,6 +39,7 @@ public class FXApplication extends Application {
         super.stop();
         context.stop();
         Platform.exit();
+        System.exit(0);
     }
 
     public static class StageReadyEvent extends ApplicationEvent {

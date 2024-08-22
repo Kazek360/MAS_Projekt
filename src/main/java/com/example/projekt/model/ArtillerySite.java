@@ -38,7 +38,7 @@ public class ArtillerySite {
     @Column(name = "artillery_state", nullable = false)
     private ArtillerySiteState artillerySiteState;
 
-    @OneToMany(mappedBy = "artillerySite",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "artillerySite",fetch = FetchType.LAZY)
     @Builder.Default
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
