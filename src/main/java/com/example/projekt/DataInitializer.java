@@ -1,8 +1,6 @@
 package com.example.projekt;
 
 import com.example.projekt.model.*;
-import com.example.projekt.model.AssociationsClasses.ArtillerySite_SupplyStation;
-import com.example.projekt.model.AssociationsClasses.SpaceShip_Operation;
 import com.example.projekt.model.Enums.*;
 import com.example.projekt.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +17,7 @@ import java.util.HashSet;
 public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
 
     private final ArtillerySiteRepository artillerySiteRepository;
-    private final ArtillerySite_SupplyStationRepository artillerySupplyRepository;
+//    private final ArtillerySite_SupplyStationRepository artillerySupplyRepository;
     private final CarrierRepository carrierRepository;
     private final CruiserRepository cruiserRepository;
     private final FireOrderRepository fireOrderRepository;
@@ -95,28 +93,49 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
                     .build();
 
             supplyStationRepository.saveAll(Arrays.asList(supplyStation1, supplyStation2));
+
+           /* ArtillerySite artillerySite = artillerySiteRepository.findById(1L).get();
+
+            // Dodaj supply stations do artylery site
+            artillerySite.getSupplyStations().add(supplyStation1);
+            artillerySite.getSupplyStations().add(supplyStation2);
+
+            // Dodaj artylery site do supply stations (opcjonalnie, jeśli dwustronna relacja jest potrzebna)
+            supplyStation1.getArtillerySites().add(artillerySite);
+            supplyStation2.getArtillerySites().add(artillerySite);
+
+            // Zapisz zmiany w bazie danych
+            artillerySiteRepository.save(artillerySite);
+            supplyStationRepository.save(supplyStation1);
+            supplyStationRepository.save(supplyStation2);*/
         }
 
-        boolean artySupplyExists = artillerySupplyRepository.count() > 0;
+        /*boolean artySupplyExists = artillerySupplyRepository.count() > 0;
         if (!artySupplyExists) {
-            ArtillerySite_SupplyStation artillerySite_supplyStation1 = ArtillerySite_SupplyStation.builder()
-                    .artillerySite(artillerySiteRepository.findById(1L).get())
-                    .supplyStation(supplyStationRepository.findById(1L).get())
-                    .build();
+            ArtillerySite artillerySite = artillerySiteRepository.findById(1L).get();
+            SupplyStation supplyStation1 = supplyStationRepository.findById(1L).get();
+            SupplyStation supplyStation2 = supplyStationRepository.findById(2L).get();
 
-            ArtillerySite_SupplyStation artillerySite_supplyStation2 = ArtillerySite_SupplyStation.builder()
-                    .artillerySite(artillerySiteRepository.findById(1L).get())
-                    .supplyStation(supplyStationRepository.findById(2L).get())
-                    .build();
+            // Dodaj supply stations do artylery site
+            artillerySite.getSupplyStations().add(supplyStation1);
+            artillerySite.getSupplyStations().add(supplyStation2);
 
-            artillerySupplyRepository.saveAll(Arrays.asList(artillerySite_supplyStation1, artillerySite_supplyStation2));
-        }
+            // Dodaj artylery site do supply stations (opcjonalnie, jeśli dwustronna relacja jest potrzebna)
+            supplyStation1.getArtillerySites().add(artillerySite);
+            supplyStation2.getArtillerySites().add(artillerySite);
+
+            // Zapisz zmiany w bazie danych
+            artillerySiteRepository.save(artillerySite);
+            supplyStationRepository.save(supplyStation1);
+            supplyStationRepository.save(supplyStation2);
+        }*/
 
 
 
 
 
-        boolean carrierExist = carrierRepository.count() > 0;
+
+        /*boolean carrierExist = carrierRepository.count() > 0;
         if (!carrierExist) {
             Carrier carrier = Carrier.builder()
                     .name("Invinvible")
@@ -276,7 +295,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
                     .artillerySite(artillerySiteRepository.findById(1L).get())
                     .build();
             serviceRepository.saveAll(Arrays.asList(service));
-        }
+        }*/
     }
 
 

@@ -1,6 +1,5 @@
 package com.example.projekt.model;
 
-import com.example.projekt.model.AssociationsClasses.ArtillerySite_SupplyStation;
 import com.example.projekt.model.Enums.ArtillerySiteState;
 import com.example.projekt.model.Validation.FireOrderComparator;
 import jakarta.persistence.*;
@@ -44,16 +43,18 @@ public class ArtillerySite {
     @EqualsAndHashCode.Exclude
     private Set<Service> services = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "artillerySite", fetch = FetchType.LAZY)
-    @Builder.Default
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Set<ArtillerySite_SupplyStation> artillerySite_SupplyStations = new LinkedHashSet<>();
-
 
     @OneToMany(mappedBy = "artillerySite", orphanRemoval = true, cascade = CascadeType.REMOVE)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<FireOrder> fireOrders = new TreeSet<>(new FireOrderComparator());
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "artillery_site_supply_station",
+            joinColumns = @JoinColumn(name = "artillery_site_id"),
+            inverseJoinColumns = @JoinColumn(name = "supply_station_id")
+    )
+    private Set<SupplyStation> supplyStations = new LinkedHashSet<>();
 
 }
