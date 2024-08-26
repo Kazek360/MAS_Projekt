@@ -154,11 +154,6 @@ public class AmmoTabController implements Initializable {
             loadedSupplyStations.put(artillerySite.getId(), supplyStations);
         }
 
-        /*if (!supplyStations.containsKey(artillerySite)){
-            List<SupplyStation> stations = artillerySiteRepository.findSupplyStationsByArtillerySiteId(artillerySite.getId());
-            supplyStations.put(artillerySite, stations);
-        }*/
-
         List<String> supplyStationLocations = new ArrayList<>();
         for (SupplyStation supplyStation : loadedSupplyStations.get(artillerySite.getId())) {
             supplyStationLocations.add(supplyStation.getLocation());
@@ -252,26 +247,16 @@ public class AmmoTabController implements Initializable {
      */
 
     private void refreshData(ArtillerySite artillerySite, SupplyStation supplyStation, int ammoOrdered) {
+        supplyStation.setAmmunition(supplyStation.getAmmunition() - ammoOrdered);
 
-        List<SupplyStation> stations = loadedSupplyStations.get(artillerySite.getId());
-        int stationIndex = stations.indexOf(supplyStation);
-        SupplyStation station = stations.get(stationIndex);
-        station.setAmmunition(supplyStation.getAmmunition()-ammoOrdered);
-        loadedSupplyStations.replace(artillerySite.getId(), stations);
+        artillerySite.setAmmunition(artillerySite.getAmmunition() + ammoOrdered);
 
-        int index = artillerySites.indexOf(artillerySite);
-        ArtillerySite tmpArty = artillerySite;
-        tmpArty.setAmmunition(artillerySite.getAmmunition()+ammoOrdered);
-        artillerySites.remove(artillerySite);
-        artillerySites.add(index, tmpArty);
-
-        loadArtillerySiteInfo(tmpArty);
-        ammo_supply_field.setText(String.valueOf(supplyStation.getAmmunition()-ammoOrdered));
+        loadArtillerySiteInfo(artillerySite);
+        ammo_supply_field.setText(String.valueOf(supplyStation.getAmmunition()));
         ammo_order_field.clear();
         supply_ComboBox.setVisible(true);
-
-
     }
+
 
 
     /**
