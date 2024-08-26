@@ -7,10 +7,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface SupplyStationRepository extends CrudRepository<SupplyStation, Long> {
 
     @Modifying
     @Transactional
     @Query("UPDATE SupplyStation s SET s.ammunition = :newAmmo WHERE s.id = :supplyStationId")
     void updateAmmunition(@Param("supplyStationId") Long supplyStationId, @Param("newAmmo") int newAmmo);
+
 }

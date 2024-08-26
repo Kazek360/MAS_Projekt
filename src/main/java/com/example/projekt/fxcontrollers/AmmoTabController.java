@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -157,11 +158,12 @@ public class AmmoTabController implements Initializable {
     private void loadSupplyStationComboBox(ArtillerySite artillerySite) {
 
         //Wyszukiwanie stacji zaopatrzeniowych przypisanych do artylerii. Używam klasy asocjacyjnej
-        List<String> supplyStationLocations = artillerySiteSupplyStations.stream()
+        /*List<String> supplyStationLocations = artillerySiteSupplyStations.stream()
                 .filter(artillerySite_supplyStation -> artillerySite_supplyStation.getArtillerySite().equals(artillerySite))
                 .map(artillerySite_supplyStation -> artillerySite_supplyStation.getSupplyStation().getLocation())
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
 
+        List<String> supplyStationLocations = new ArrayList<>();
         supply_ComboBox.getItems().clear();
 
         if (supplyStationLocations.isEmpty()) {
