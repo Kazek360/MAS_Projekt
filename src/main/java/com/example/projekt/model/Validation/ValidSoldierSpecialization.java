@@ -9,16 +9,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.METHOD})
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = SoldierSpecializationValidator.class)
 public @interface ValidSoldierSpecialization {
 
-    String message() default "Specialization field is not valid!";
+    String message() default "Soldier does not have the required specialization.";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    SpecializationType value();
+//    SpecializationType value();
 }

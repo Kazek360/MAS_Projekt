@@ -23,6 +23,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 @SuperBuilder
+@ValidSoldierSpecialization
 public abstract class Soldier {
 
     @Id
@@ -53,6 +54,11 @@ public abstract class Soldier {
     @Min(1000)
     private Integer pay;
 
+    @ElementCollection
+    @CollectionTable(name = "specializations", joinColumns = @JoinColumn(name = "soldier_id"))
+    @Builder.Default
+    private Set<SpecializationType> specializationTypes = new HashSet<>();
+
     //Quartermaster
     @Min(1)
     private Integer loadCapacity;
@@ -75,44 +81,44 @@ public abstract class Soldier {
 
     private Integer specialitiesPayBonus = 100;
 
-/*    @ValidSoldierSpecialization(SpecializationType.QUARTERMASTER)
-    public void deliverAmmo(int amount) {
-        System.out.println("Soldier will deliver: " + amount + " artillery rounds");
-    }
+//    @ValidSoldierSpecialization(SpecializationType.QUARTERMASTER)
+//    public void deliverAmmo(int amount) {
+//        System.out.println("Soldier will deliver: " + amount + " artillery rounds");
+//    }
 
-    @ValidSoldierSpecialization(SpecializationType.MEDIC)
-    public void provideFirstAid() {
-        System.out.println("Providing first aid");
-    }*/
+//    @ValidSoldierSpecialization(SpecializationType.MEDIC)
+//    public void provideFirstAid() {
+//        System.out.println("Providing first aid");
+//    }
 
 
-/*    @ValidSoldierSpecialization(SpecializationType.QUARTERMASTER)
-    public void setLoadCapacity(Integer loadCapacity) {
-        this.loadCapacity = loadCapacity;
-    }
+//    @ValidSoldierSpecialization(SpecializationType.QUARTERMASTER)
+//    public void setLoadCapacity(Integer loadCapacity) {
+//        this.loadCapacity = loadCapacity;
+//    }
 
-    @ValidSoldierSpecialization(SpecializationType.QUARTERMASTER)
-    public void setSupplyPayBonus(Integer supplyPayBonus) {
-        this.supplyPayBonus = supplyPayBonus;
-    }
-
-    @ValidSoldierSpecialization(SpecializationType.MEDIC)
-    public void setMedicCourses(Set<String> medicCourses) {
-        this.medicCourses = medicCourses;
-    }
-
-    @ValidSoldierSpecialization(SpecializationType.MEDIC)
-    public void setMedicPayBonus(Integer medicPayBonus) {
-        this.medicPayBonus = medicPayBonus;
-    }
-
-    @ValidSoldierSpecialization(SpecializationType.SPECIALIST)
-    public void setSpecialities(Set<String> specialities) {
-        this.specialities = specialities;
-    }
-
-    @ValidSoldierSpecialization(SpecializationType.SPECIALIST)
-    public void setSpecialitiesPayBonus(Integer specialitiesPayBonus) {
-        this.specialitiesPayBonus = specialitiesPayBonus;
-    }*/
+//    @ValidSoldierSpecialization(SpecializationType.QUARTERMASTER)
+//    public void setSupplyPayBonus(Integer supplyPayBonus) {
+//        this.supplyPayBonus = supplyPayBonus;
+//    }
+//
+//    @ValidSoldierSpecialization(SpecializationType.MEDIC)
+//    public void setMedicCourses(Set<String> medicCourses) {
+//        this.medicCourses = medicCourses;
+//    }
+//
+//    @ValidSoldierSpecialization(SpecializationType.MEDIC)
+//    public void setMedicPayBonus(Integer medicPayBonus) {
+//        this.medicPayBonus = medicPayBonus;
+//    }
+//
+//    @ValidSoldierSpecialization(SpecializationType.SPECIALIST)
+//    public void setSpecialities(Set<String> specialities) {
+//        this.specialities = specialities;
+//    }
+//
+//    @ValidSoldierSpecialization(SpecializationType.SPECIALIST)
+//    public void setSpecialitiesPayBonus(Integer specialitiesPayBonus) {
+//        this.specialitiesPayBonus = specialitiesPayBonus;
+//    }
 }
