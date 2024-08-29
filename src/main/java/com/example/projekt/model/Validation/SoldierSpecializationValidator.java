@@ -28,22 +28,17 @@ public class SoldierSpecializationValidator implements ConstraintValidator<Valid
         boolean hasSpecialities = soldier.getSpecialities() != null && !soldier.getSpecialities().isEmpty();
         boolean isSpecialist = soldier.getSpecializationTypes().contains(SpecializationType.SPECIALIST);
 
-        if (loadCapacity == null){
-            if (hasMedicCourses && !isMedic)
-                return false;
-
-            if (hasSpecialities && !isSpecialist)
-                return false;
-        } else {
+        if (loadCapacity != null) {
             if (loadCapacity > 1 && !isQuartermaster)
                 return false;
-
-            if (hasMedicCourses && !isMedic)
-                return false;
-
-            if (hasSpecialities && !isSpecialist)
-                return false;
         }
+
+        if (hasMedicCourses && !isMedic)
+            return false;
+
+        if (hasSpecialities && !isSpecialist)
+            return false;
+
 
         return true;
     }

@@ -131,9 +131,6 @@ public class SoldierValidatorTest {
 
     @Test
     public void whenMedicCoursesAndNoSpecialization() {
-        Set<SpecializationType> specializations = new HashSet<>();
-        specializations.add(SpecializationType.QUARTERMASTER);
-
         Set<String> courses = new HashSet<>();
         courses.add("Pierwsza pomoc");
         courses.add("Medycyna pola walki");

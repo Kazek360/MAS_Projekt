@@ -106,14 +106,12 @@ public class AmmoTabController implements Initializable {
 
         artillery_ComboBox.getItems().addAll(artySiteLocations);
 
-        //Co się dzieje po wybraniu danej opcji.
         artillery_ComboBox.setOnAction(e -> {
             boolean isSelected = artillery_ComboBox.getSelectionModel().getSelectedItem() != null;
             split_pane.setVisible(isSelected);
             if (isSelected) {
                 loadArtillerySiteInfo(getSelectedArtillerySite());
             }
-//            refreshRepositoriesAndInfo();
 
         });
     }
@@ -147,7 +145,7 @@ public class AmmoTabController implements Initializable {
 
     private void loadSupplyStationComboBox(ArtillerySite artillerySite) {
 
-        if (!loadedSupplyStations.containsKey(artillerySite.getId())){
+        if (!loadedSupplyStations.containsKey(artillerySite.getId())) {
             List<SupplyStation> supplyStations = artillerySiteRepository.findSupplyStationsByArtillerySiteId(artillerySite.getId());
             loadedSupplyStations.put(artillerySite.getId(), supplyStations);
         }
@@ -186,12 +184,10 @@ public class AmmoTabController implements Initializable {
                         .findAny()
                         .orElseThrow(() -> new RuntimeException("Supply station not found"));
 
-
-                //Ładowanie info o amunicji na stacji zaopatrzeniowej
                 ammo_supply_field.setText(String.valueOf(choosedSupplyStations.getAmmunition()));
 
                 loadOrderAmmoLogic(artillerySite, choosedSupplyStations);
-            } else if(error_massage_supply_search.isVisible()) {
+            } else if (error_massage_supply_search.isVisible()) {
                 supply_ammo_hbox.setVisible(false);
                 order_value_vbox.setVisible(false);
             }
@@ -199,12 +195,12 @@ public class AmmoTabController implements Initializable {
         });
     }
 
-/**
- * Cała logika zamawiania amunicji, wraz z robieniem updatów na baziw danuch.
- *
- * @param artillerySite stanowisko artyleryjskie go którego będziemy dostarczać amunicję
- * @param supplyStation stacja zaopatrzneiowa z której będziemy amunicję pobierać.
- */
+    /**
+     * Cała logika zamawiania amunicji, wraz z robieniem updatów na baziw danuch.
+     *
+     * @param artillerySite stanowisko artyleryjskie go którego będziemy dostarczać amunicję
+     * @param supplyStation stacja zaopatrzneiowa z której będziemy amunicję pobierać.
+     */
 
     private void loadOrderAmmoLogic(ArtillerySite artillerySite, SupplyStation supplyStation) {
         ammo_order_field.setText("");
@@ -238,9 +234,10 @@ public class AmmoTabController implements Initializable {
 
     /**
      * Odświeżanie informacji o stanowiskach artyleryjskich oraz stacji zaopatrzeniowych
+     *
      * @param artillerySite stanowisko do którego byłą zamawiana amunicja
      * @param supplyStation stacja z której amunicję brano
-     * @param ammoOrdered ilość zamówionej amunicji
+     * @param ammoOrdered   ilość zamówionej amunicji
      */
 
     private void refreshData(ArtillerySite artillerySite, SupplyStation supplyStation, int ammoOrdered) {
@@ -251,11 +248,11 @@ public class AmmoTabController implements Initializable {
         loadArtillerySiteInfo(artillerySite);
         ammo_supply_field.setText(String.valueOf(supplyStation.getAmmunition()));
         ammo_order_field.clear();
+
         supply_ammo_hbox.setVisible(false);
         order_value_vbox.setVisible(false);
 
     }
-
 
 
     /**
