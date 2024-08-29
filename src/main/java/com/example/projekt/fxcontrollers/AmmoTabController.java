@@ -69,13 +69,11 @@ public class AmmoTabController implements Initializable {
 
     private final ArtillerySiteRepository artillerySiteRepository;
     private final FireOrderRepository fireOrderRepository;
-    //    private final ArtillerySite_SupplyStationRepository artillerySupplyRepository;
     private final SupplyStationRepository supplyStationRepository;
 
     private List<ArtillerySite> artillerySites;
 
-    private HashMap<Long, List<SupplyStation>> loadedSupplyStations = new HashMap<>();
-    private boolean wasOrdered = false;
+    private final HashMap<Long, List<SupplyStation>> loadedSupplyStations = new HashMap<>();
 
 
     private String testSoldier = "123";
@@ -168,8 +166,8 @@ public class AmmoTabController implements Initializable {
 
         } else {
 
-            supply_ComboBox.getSelectionModel().select("<Wybierz stacje>");
             supply_ComboBox.getItems().addAll(supplyStationLocations);
+            supply_ComboBox.getSelectionModel().select("<Wybierz stacje>");
             error_massage_supply_search.setVisible(false);
 
         }
@@ -227,7 +225,6 @@ public class AmmoTabController implements Initializable {
                 supplyStationRepository.updateAmmunition(supplyStation.getId(), supplyStation.getAmmunition() - Integer.parseInt(order));
                 artillerySiteRepository.updateAmmunition(artillerySite.getId(), artillerySite.getAmmunition() + Integer.parseInt(order));
 
-                wasOrdered = true;
                 refreshData(artillerySite, supplyStation, Integer.parseInt(order));
 
             } else {
@@ -241,9 +238,9 @@ public class AmmoTabController implements Initializable {
 
     /**
      * Odświeżanie informacji o stanowiskach artyleryjskich oraz stacji zaopatrzeniowych
-     * @param artillerySite
-     * @param supplyStation
-     * @param ammoOrdered
+     * @param artillerySite stanowisko do którego byłą zamawiana amunicja
+     * @param supplyStation stacja z której amunicję brano
+     * @param ammoOrdered ilość zamówionej amunicji
      */
 
     private void refreshData(ArtillerySite artillerySite, SupplyStation supplyStation, int ammoOrdered) {
@@ -254,7 +251,9 @@ public class AmmoTabController implements Initializable {
         loadArtillerySiteInfo(artillerySite);
         ammo_supply_field.setText(String.valueOf(supplyStation.getAmmunition()));
         ammo_order_field.clear();
-        supply_ComboBox.setVisible(true);
+        supply_ammo_hbox.setVisible(false);
+        order_value_vbox.setVisible(false);
+
     }
 
 

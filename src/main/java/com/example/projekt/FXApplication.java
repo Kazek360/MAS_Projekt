@@ -27,6 +27,8 @@ public class FXApplication extends Application {
         //when app is started publish event that should trigger creation of GUI (in StageInitializer class)
         context.publishEvent(new StageReadyEvent(stage));
 
+        stage.setTitle("SoldierGUI");
+
         stage.setOnCloseRequest(event -> {
             stage.close();
             event.consume();
