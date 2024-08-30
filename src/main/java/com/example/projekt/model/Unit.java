@@ -38,7 +38,7 @@ public class Unit {
 
 
     @OneToMany(mappedBy = "unit")
-//    @Builder.Default
+    @Builder.Default
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Infantryman> infantrymen = new LinkedHashSet<>();

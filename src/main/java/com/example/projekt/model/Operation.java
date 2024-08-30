@@ -46,12 +46,4 @@ public class Operation {
 
     @ManyToMany(mappedBy = "operations", cascade = CascadeType.MERGE)
     private Set<SpaceShip> spaceShips = new LinkedHashSet<>();
-
-    public Set<SpaceShip> getSpaceShips() {
-        return spaceShips;
-    }
-
-    public void setSpaceShips(Set<SpaceShip> spaceShips) {
-        this.spaceShips = spaceShips;
-    }
 }
