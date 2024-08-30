@@ -1,6 +1,5 @@
 package com.example.projekt.model;
 
-import com.example.projekt.model.AssociationsClasses.SpaceShip_Operation;
 import com.example.projekt.model.Enums.OperationType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -39,17 +38,20 @@ public class Operation {
     @EqualsAndHashCode.Exclude
     private Set<Service> services = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "operation", fetch = FetchType.LAZY)
-    @Builder.Default
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Set<SpaceShip_Operation> spaceShip_Operations = new LinkedHashSet<>();
-
-
     @OneToMany(mappedBy = "operation")
     @Builder.Default
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Unit> units = new LinkedHashSet<>();
 
+    @ManyToMany(mappedBy = "operations", cascade = CascadeType.MERGE)
+    private Set<SpaceShip> spaceShips = new LinkedHashSet<>();
+
+    public Set<SpaceShip> getSpaceShips() {
+        return spaceShips;
+    }
+
+    public void setSpaceShips(Set<SpaceShip> spaceShips) {
+        this.spaceShips = spaceShips;
+    }
 }

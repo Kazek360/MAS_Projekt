@@ -27,7 +27,6 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     private final SailorRepository sailorRepository;
     private final ServiceRepository serviceRepository;
     private final SoldierRepository soldierRepository;
-    private final SpaceShip_OperationRepository spaceShipOperationRepository;
     private final SpaceShipRepository spaceShipRepository;
     private final SupplyStationRepository supplyStationRepository;
     private final TransporterRepository transporterRepository;

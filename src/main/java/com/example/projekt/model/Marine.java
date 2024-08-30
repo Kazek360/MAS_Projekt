@@ -39,7 +39,6 @@ public class Marine extends Infantryman implements ISailor{
 
     @Override
     public void setSeaRank(SeaRank rank) {
-        this.seaRank = seaRank;
     }
 
     @Override

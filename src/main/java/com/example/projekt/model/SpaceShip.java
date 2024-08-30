@@ -1,6 +1,5 @@
 package com.example.projekt.model;
 
-import com.example.projekt.model.AssociationsClasses.SpaceShip_Operation;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -32,16 +31,18 @@ public abstract class SpaceShip {
     @Min(1)
     private Double fuel;
 
-
-    @OneToMany(mappedBy = "spaceShip",fetch = FetchType.LAZY)
-    @Builder.Default
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Set<SpaceShip_Operation> spaceShip_Operations = new LinkedHashSet<>();
-
     @OneToMany(mappedBy = "spaceShip")
     @Builder.Default
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Sailor> sailors = new LinkedHashSet<>();
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "SpaceShip_operations",
+            joinColumns = @JoinColumn(name = "spaceShip_id"),
+            inverseJoinColumns = @JoinColumn(name = "operations_id")
+    )
+    private Set<Operation> operations = new LinkedHashSet<>();
+
 }
