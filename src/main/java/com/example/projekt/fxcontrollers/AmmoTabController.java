@@ -89,9 +89,7 @@ public class AmmoTabController implements Initializable {
             error_massage_artillery_search.setVisible(true);
         }
     }
-    /*
 
-     */
 
     /**
      * Wyświetlanie listy stanowisk artyleryjskich.
